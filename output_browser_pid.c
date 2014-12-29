@@ -27,9 +27,9 @@ int main(int argc, char *argv[])
     FILE *fp;
     char buffer[4096];
     bool have_broser = false;
-    const char *b2g = "adb shell b2g-ps";
+    const char *b2g_ps = "adb shell b2g-ps";
     
-    fp = popen(b2g, "r");
+    fp = popen(b2g_ps, "r");
     assert(fp);
 
     while(fgets(buffer, 4095, fp) != NULL) {
@@ -38,6 +38,9 @@ int main(int argc, char *argv[])
         }
 
         if (! strncmp(buffer, "Browser", 7)) {
+            have_broser = true;
+            show_pid(buffer);
+        } else if (! strncmp(buffer, "CastApp", 7)) {
             have_broser = true;
             show_pid(buffer);
         }
